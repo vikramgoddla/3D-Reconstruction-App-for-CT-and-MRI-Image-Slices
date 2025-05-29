@@ -1,2 +1,34 @@
 # 3D-Reconstruction-App-for-CT-and-MRI-Image-Slices
 Use this web app to upload a picture of 2D frame slices or a video where you scroll through the slices of a 3D volume and receive a 3D nifti volume.
+
+This web app harnesses YOLOv8 and custom-trained models to intelligently detect, extract, and realign CT/MRI slices from various input formats — producing a clean 3D NIfTI file reconstruction. The user can upload inputs via the following scenarios:
+
+1) **Upload a 2D Grid of Slices (Image)**
+   
+Upload a single image containing a grid of CT/MRI slices, ordered left to right, top to bottom.
+Demo:
+
+2) **Upload a Screen Recording (Video)**
+Upload a screenrecorded video (e.g., from 3D Slicer) where you scroll through axial slices using a slider or keyboard. The app detects frames where the slice changes and reconstructs a volume.
+Demo:
+
+3) **Upload a Phone Recording (Video)**
+Upload a phone-recorded video of a monitor while scrolling through slices. The model detects CT slices frame-by-frame and builds the 3D volume.
+Demo:
+
+## Install
+
+```bash
+# pip install
+pip install git+https://github.com/vikramgoddla/3D-Reconstruction-App-for-CT-and-MRI-Image-Slices
+
+# more manually (first clone then)
+# Clone the repository
+git clone https://github.com/vikramgoddla/3D-Reconstruction-App-for-CT-and-MRI-Image-Slices.git
+cd 3D-Reconstruction-App-for-CT-and-MRI-Image-Slices
+
+# Install dependencies
+pip install -r requirements.txt
+
+
+
