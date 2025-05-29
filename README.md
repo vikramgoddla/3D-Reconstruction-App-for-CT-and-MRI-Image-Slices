@@ -6,15 +6,15 @@ This web app harnesses YOLOv8 and custom-trained models to intelligently detect,
 1) **Upload a 2D Grid of Slices (Image)**
    
 Upload a single image containing a grid of CT/MRI slices, ordered left to right, top to bottom.
-Demo: (assets/Example_1.gif)
+![Demo](assets/Example_1.gif)
 
 2) **Upload a Screen Recording (Video)**
 Upload a screenrecorded video (e.g., from 3D Slicer) where you scroll through axial slices using a slider or keyboard. The app detects frames where the slice changes and reconstructs a volume.
-Demo: (assets/Example_2.gif)
+![Demo](assets/Example_2.gif)
 
 3) **Upload a Phone Recording (Video)**
 Upload a phone-recorded video of a monitor while scrolling through slices. The model detects CT slices frame-by-frame and builds the 3D volume.
-Demo: (assets/Example_3.gif)
+![Demo](assets/Example_3.gif)
 
 ## Install
 
