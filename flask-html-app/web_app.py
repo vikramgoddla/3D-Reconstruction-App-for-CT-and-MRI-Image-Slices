@@ -20,6 +20,43 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 model = YOLO('best.pt')
 model_screen = YOLO('roi_aug_detector_final.pt')
 model_phone = YOLO('ct_fullframe_detector_final.pt')
+import os
+import csv
+import torch
+import cv2
+import torch.nn as nn
+import torch.optim as optim
+import nibabel as nib
+import numpy as np
+from tqdm import tqdm
+from torch.utils.data import Dataset, DataLoader
+
+# --------------------------------------------
+# Volume Realignment Model Class
+# --------------------------------------------
+class SliceRegressor(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Conv2d(1, 16, 3, padding=1), nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Conv2d(16, 32, 3, padding=1), nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Flatten(),
+            nn.Linear(32 * 64 * 64, 128), nn.ReLU(),
+            nn.Linear(128, 3)  # dx, dy, scale
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+def apply_transform(slice_img, dx, dy, scale):
+    h, w = slice_img.shape
+    center = (w // 2, h // 2)
+    M = cv2.getRotationMatrix2D(center, angle=0, scale=scale)
+    M[0, 2] += dx
+    M[1, 2] += dy
+    return cv2.warpAffine(slice_img, M, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
 
 def order_points(pts):
     rect = np.zeros((4, 2), dtype="float32")
