@@ -7,6 +7,14 @@ import nibabel as nib
 from ultralytics import YOLO
 import threading
 import pytesseract
+import os
+import csv
+import torch
+import cv2
+import torch.nn as nn
+import torch.optim as optim
+from tqdm import tqdm
+from torch.utils.data import Dataset, DataLoader
 
 app = Flask(__name__)
 app.secret_key = 'ocr_4_life'
@@ -20,16 +28,6 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 model = YOLO('best.pt')
 model_screen = YOLO('roi_aug_detector_final.pt')
 model_phone = YOLO('ct_fullframe_detector_final.pt')
-import os
-import csv
-import torch
-import cv2
-import torch.nn as nn
-import torch.optim as optim
-import nibabel as nib
-import numpy as np
-from tqdm import tqdm
-from torch.utils.data import Dataset, DataLoader
 
 # --------------------------------------------
 # Volume Realignment Model Class
