@@ -120,7 +120,7 @@ def process_video(video_path, output_name, model, expected_slices=36, align=Fals
     suffix = "_aligned" if align else ""
     out_path = os.path.join(OUTPUT_FOLDER, f'{output_name}{suffix}.nii.gz')
     nib.save(nifti, out_path)
-    print(f"[✓] Saved to {out_path}")
+    print(f"Saved to {out_path}")
 
 def main():
     parser = argparse.ArgumentParser(description="3D Slice Reconstruction Demo")
@@ -138,7 +138,7 @@ def main():
         model = model_phone if args.phone else model_screen
         process_video(filename, base_name, model, align=args.align)
     else:
-        print("[✗] Unsupported file type.")
+        print("Unsupported file type.")
 
 if __name__ == "__main__":
     main()
