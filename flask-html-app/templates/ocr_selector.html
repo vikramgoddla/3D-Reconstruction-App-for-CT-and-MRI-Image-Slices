@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OCR ROI Selector</title>
+    <style>
+        canvas {
+            border: 2px solid black;
+            cursor: crosshair;
+            max-width: 90vw;
+            height: auto;
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+<body>
+    <h2>Select ROI for OCR</h2>
+    <canvas id="canvas"></canvas>
+    <form id="roiForm" method="POST" action="/submit_ocr_roi">
+        <input type="hidden" name="x" id="x">
+        <input type="hidden" name="y" id="y">
+        <input type="hidden" name="w" id="w">
+        <input type="hidden" name="h" id="h">
+        <input type="hidden" name="video_filename" value="{{ filename }}">
+        <button type="submit">Submit ROI</button>
+    </form>
+
+    <script>
+        const img = new Image();
+        img.src = "{{ frame_path }}";
+        
+        img.onload = () => {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+        
+            // Set scaled display size
+            const maxWidth = 800;
+            const scaleRatio = img.width > maxWidth ? maxWidth / img.width : 1;
+        
+            canvas.width = img.width * scaleRatio;
+            canvas.height = img.height * scaleRatio;
+        
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        
+            let startX, startY, isDragging = false, currX, currY;
+        
+            canvas.onmousedown = e => {
+                isDragging = true;
+                const rect = canvas.getBoundingClientRect();
+                startX = e.clientX - rect.left;
+                startY = e.clientY - rect.top;
+            };
+        
+            canvas.onmousemove = e => {
+                if (!isDragging) return;
+                const rect = canvas.getBoundingClientRect();
+                currX = e.clientX - rect.left;
+                currY = e.clientY - rect.top;
+        
+                // Live update rectangle
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(
+                    Math.min(startX, currX),
+                    Math.min(startY, currY),
+                    Math.abs(currX - startX),
+                    Math.abs(currY - startY)
+                );
+            };
+        
+            canvas.onmouseup = () => {
+                isDragging = false;
+        
+                const x = Math.min(startX, currX) / scaleRatio;
+                const y = Math.min(startY, currY) / scaleRatio;
+                const w = Math.abs(currX - startX) / scaleRatio;
+                const h = Math.abs(currY - startY) / scaleRatio;
+        
+                document.getElementById('x').value = Math.round(x);
+                document.getElementById('y').value = Math.round(y);
+                document.getElementById('w').value = Math.round(w);
+                document.getElementById('h').value = Math.round(h);
+            };
+        };
+        </script>        
+</body>
+</html>

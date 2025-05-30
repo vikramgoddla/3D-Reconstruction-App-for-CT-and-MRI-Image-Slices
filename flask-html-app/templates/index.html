@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CT Slice Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Upload a CT Slice Grid</h1>
+
+    <h2>Upload Image (e.g. grid screenshot)</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <input type="submit" value="Upload Image">
+    </form>
+
+    <h2>Upload Screenrecorded Video (e.g. scrolling through slices)</h2>
+    <form action="/upload_video_screen" method="post" enctype="multipart/form-data">
+        <label for="n_slices_screen">Number of slices in 3D image:</label>
+        <input type="number" name="n_slices" id="n_slices_screen" min="1" required>
+        <br>
+        <input type="file" name="video" accept="video/*" required>
+        <input type="submit" value="Upload Video">
+    </form>
+
+    <h2>Upload Phone Recorded Video (e.g. using phone to record the computer screen)</h2>
+    <form action="/upload_video_phone" method="post" enctype="multipart/form-data">
+        <label for="n_slices_phone">Number of slices in 3D image:</label>
+        <input type="number" name="n_slices" id="n_slices_phone" min="1" required>
+        <br>
+        <input type="file" name="video" accept="video/*" required>
+        <input type="submit" value="Upload Video">
+    </form>
+</body>
+</html>

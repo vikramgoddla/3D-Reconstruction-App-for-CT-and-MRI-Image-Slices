@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live YOLO Stream</title>
+    <style>
+        body {
+            background-color: #0d1b2a;
+            color: #f0f4f8;
+            text-align: center;
+            font-family: sans-serif;
+        }
+        #download {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real-Time Slice Detection</h1>
+    <img src="{{ stream_url }}" width="640" />
+
+    <div id="download">
+        <p>NIfTI file ready:</p>
+        <a id="niftiLink" href="#" download>Download .nii.gz</a>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const downloadBlock = document.getElementById('download');
+            const niftiLink = document.getElementById('niftiLink');
+
+            // Hide block on load
+            downloadBlock.style.display = 'none';
+
+            // Use exact filename passed from Flask
+            const niftiUrl = "/output/{{ nifti_filename }}";
+
+            async function poll() {
+                try {
+                    const res = await fetch(niftiUrl, { method: 'HEAD' });
+                    if (res.ok) {
+                        niftiLink.href = niftiUrl;
+                        downloadBlock.style.display = 'block';
+                    } else {
+                        setTimeout(poll, 2000);
+                    }
+                } catch {
+                    setTimeout(poll, 2000);
+                }
+            }
+
+            poll();
+        });
+    </script>
+</body>
+</html>
