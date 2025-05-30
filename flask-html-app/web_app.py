@@ -25,9 +25,9 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 # Load YOLO models
-model = YOLO('best.pt')
-model_screen = YOLO('roi_aug_detector_final.pt')
-model_phone = YOLO('ct_fullframe_detector_final.pt')
+model = YOLO('grid_image.pt')
+model_screen = YOLO('screen_recording_detect.pt')
+model_phone = YOLO('phone_recording_detect.pt')
 
 # --------------------------------------------
 # Volume Realignment Model Class
