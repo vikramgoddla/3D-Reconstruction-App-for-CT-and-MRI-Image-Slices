@@ -16,7 +16,7 @@ Upload a screenrecorded video (e.g., from 3D Slicer) where you scroll through ax
 Upload a phone-recorded video of a monitor while scrolling through slices. The model detects CT slices frame-by-frame and builds the 3D volume.
 ![Demo](assets/Example_3.gif)
 
-## Install
+## Install and Usage Instructions
 
 ```bash
 # pip install
