@@ -69,7 +69,7 @@ def process_image_grid(image_path, output_name):
     nifti = nib.Nifti1Image(volume, affine=np.eye(4))
     out_path = os.path.join(OUTPUT_FOLDER, f'{output_name}_grid.nii.gz')
     nib.save(nifti, out_path)
-    print(f"[✓] Saved to {out_path}")
+    print(f"Saved to {out_path}")
 
 def process_video(video_path, output_name, model, expected_slices=36, align=False):
     cap = cv2.VideoCapture(video_path)
@@ -101,7 +101,7 @@ def process_video(video_path, output_name, model, expected_slices=36, align=Fals
     if align:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         model_align = SliceRegressor().to(device)
-        model_align.load_state_dict(torch.load("slice_transform_regressor.pth", map_location=device))
+        model_align.load_state_dict(torch.load("3D_volume_aligner.pth", map_location=device))
         model_align.eval()
 
         aligned_slices = [slices[0]]
