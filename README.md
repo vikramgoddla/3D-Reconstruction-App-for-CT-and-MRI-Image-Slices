@@ -30,5 +30,23 @@ cd 3D-Reconstruction-App-for-CT-and-MRI-Image-Slices
 # Install dependencies
 pip install -r requirements.txt
 
+## Demo.py usage instructions
+
+demo.py provides an easy usage interface in your workspace terminal. Check below to see command line format for feeding different file types (image, phone video, and screen video) and test aligned vs unaligned.
+
+```bash
+# download model weights locally and add to workspace
+# Option 1: clone repo 
+git clone https://github.com/vikramgoddla/3D-Reconstruction-App-for-CT-and-MRI-Image-Slices.git
+cd 3D-Reconstruction-App-for-CT-and-MRI-Image-Slices
+
+# Option 2: download model-weights folder from repo
+
+# Command line formatting:
+python demo.py my_video.mov                # Screen video
+python demo.py my_video.mov --phone       # Phone video
+python demo.py my_video.mov --align       # With alignment
+python demo.py my_grid.png                # Grid of slices (image)
+
 
 
